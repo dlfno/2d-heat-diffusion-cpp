@@ -1,5 +1,11 @@
 # 2D Heat Diffusion Simulation (HPC Project)
 
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![OpenMP](https://img.shields.io/badge/OpenMP-Enabled-blue?style=for-the-badge)
+![MPI](https://img.shields.io/badge/MPI-Enabled-red?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+
 Simulación numérica de la Ecuación de Calor en 2D implementada en C++ utilizando técnicas de computación de alto rendimiento (HPC). El proyecto compara el rendimiento entre ejecución serial, paralelismo de memoria compartida (**OpenMP**) y paralelismo de memoria distribuida (**MPI**) sobre arquitectura Apple Silicon (M1).
 
 ## 🚀 Características
