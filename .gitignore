@@ -1,0 +1,14 @@
+# Compilados
+*.o
+*.out
+heat_serial
+heat_omp
+heat_mpi
+
+# Datos y Gráficas (pueden ser pesados)
+output/*.csv
+output/*.png
+output/*.mp4
+
+# Sistema
+.DS_Store
