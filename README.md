@@ -41,8 +41,7 @@ brew install gcc open-mpi python3 numpy matplotlib
 Compilación
 El proyecto utiliza un Makefile para gestionar los builds:
 
-´´´Bash
-
+```bash
 make all      # Compila todo
 make serial   # Compila solo version serial
 make omp      # Compila solo OpenMP
@@ -60,7 +59,9 @@ export OMP_NUM_THREADS=4
 
 # MPI (Ej. 4 procesos)
 mpirun -np 4 ./heat_mpi
-´´´
+```
+
 ---
+
 **Autor:** Alonso Delfino Cervantes Flores
 **Licencia:** MIT
