@@ -23,7 +23,7 @@ Grid: 2000x2000 | Iteraciones: 4000
 
 > **Nota Técnica:** La implementación MPI superó a OpenMP y logró un speedup superlineal (>4x con 4 cores) debido a la descomposición de dominio. Al dividir la matriz global en sub-bloques más pequeños, cada proceso pudo mantener sus datos dentro de la caché del procesador más eficientemente que el modelo de memoria compartida monolítica.
 
-##  visualización
+##  Visualización
 ![Difusión de Calor](img/portada.png)
 *Visualización de la difusión térmica tras 20000 iteraciones, con un punto caliente central inicial*
 
@@ -41,7 +41,7 @@ brew install gcc open-mpi python3 numpy matplotlib
 Compilación
 El proyecto utiliza un Makefile para gestionar los builds:
 
-Bash
+´´´Bash
 
 make all      # Compila todo
 make serial   # Compila solo version serial
@@ -60,7 +60,7 @@ export OMP_NUM_THREADS=4
 
 # MPI (Ej. 4 procesos)
 mpirun -np 4 ./heat_mpi
-
+´´´
 ---
 **Autor:** Alonso Delfino Cervantes Flores
 **Licencia:** MIT
