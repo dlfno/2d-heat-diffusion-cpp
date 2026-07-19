@@ -10,5 +10,11 @@ output/*.csv
 output/*.png
 output/*.mp4
 
+# Entornos virtuales de Python
+uwu/
+venv/
+.venv/
+__pycache__/
+
 # Sistema
 .DS_Store

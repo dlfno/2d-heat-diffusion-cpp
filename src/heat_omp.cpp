@@ -2,11 +2,17 @@
 #include <vector>
 #include <fstream>
 #include <chrono>
-#include <omp.h> // <--- NECESARIO PARA OPENMP
+#include <cstdlib> // Para getenv / atoi
+#include <omp.h>   // <--- NECESARIO PARA OPENMP
+
+static int env_int(const char* name, int def) {
+    const char* v = std::getenv(name);
+    return (v && *v) ? std::atoi(v) : def;
+}
 
 // Parámetros (Mismos que serial para comparación justa)
-const int N = 2000;
-const int MAX_ITER = 4000;
+const int N = env_int("HEAT_N", 2000);
+const int MAX_ITER = env_int("HEAT_ITER", 4000);
 const double ALPHA = 0.1;
 
 int main() {
@@ -27,11 +33,18 @@ int main() {
 
     for (int t = 0; t < MAX_ITER; ++t) {
         
-        // --- AQUÍ OCURRE LA MAGIA ---
-        // #pragma omp parallel for: Divide el bucle entre los hilos.
-        // collapse(2): Intenta paralelizar ambos bucles anidados (i y j) como uno solo gigante.
-        // schedule(static): Divide el trabajo en bloques fijos (mejor para cargas balanceadas como esta).
-        #pragma omp parallel for collapse(2) schedule(static)
+        // --- PARALELIZACIÓN ---
+        // #pragma omp parallel for: reparte las filas (bucle i) entre los hilos.
+        // schedule(static): bloques fijos y contiguos de filas -> buena localidad
+        //   de caché y balanceo perfecto para esta carga uniforme.
+        //
+        // NOTA: se paraleliza SOLO el bucle externo (i), a propósito.
+        // Añadir collapse(2) fusiona i y j en un único índice: el compilador debe
+        // recuperar i,j con división/módulo por celda y, peor aún, PIERDE la
+        // vectorización SIMD del bucle interno j. Medido, collapse(2) hacía la
+        // versión de 1 hilo ~2x más lenta que el serial. Sin collapse el bucle j
+        // se auto-vectoriza y cada hilo procesa filas completas de forma secuencial.
+        #pragma omp parallel for schedule(static)
         for (int i = 1; i < N - 1; ++i) {
             for (int j = 1; j < N - 1; ++j) {
                 int idx = i * N + j;

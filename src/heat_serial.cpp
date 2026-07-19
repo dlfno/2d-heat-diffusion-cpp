@@ -2,12 +2,20 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
-#include <chrono> // Para medir tiempo
+#include <chrono>   // Para medir tiempo
+#include <cstdlib>  // Para getenv / atoi
+
+// Lee un entero desde una variable de entorno (o usa el valor por defecto).
+// Permite cambiar el tamaño del problema sin recompilar:
+//   HEAT_N=512 HEAT_ITER=1000 ./heat_serial
+static int env_int(const char* name, int def) {
+    const char* v = std::getenv(name);
+    return (v && *v) ? std::atoi(v) : def;
+}
 
 // Parámetros de la simulación
-const int N = 2000;          // Tamaño de la grilla (1000x1000)
-// const int MAX_ITER = 20000;  // Para la imágen muestra
-const int MAX_ITER = 4000;   // Pasos de tiempo (se usó para las mediciones)
+const int N = env_int("HEAT_N", 2000);          // Tamaño de la grilla (NxN)
+const int MAX_ITER = env_int("HEAT_ITER", 4000); // Pasos de tiempo
 const double ALPHA = 0.1;    // Coeficiente de difusión ficticio (para estabilidad)
 
 // Función para guardar resultados en CSV

@@ -3,10 +3,16 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <cstdlib> // Para getenv / atoi
+
+static int env_int(const char* name, int def) {
+    const char* v = std::getenv(name);
+    return (v && *v) ? std::atoi(v) : def;
+}
 
 // Mismos parámetros pesados para comparar con OpenMP
-const int N = 2000;
-const int MAX_ITER = 4000;
+const int N = env_int("HEAT_N", 2000);
+const int MAX_ITER = env_int("HEAT_ITER", 4000);
 const double ALPHA = 0.1;
 
 int main(int argc, char** argv) {
